@@ -24,7 +24,7 @@
 <ul id="messagesList">
     @foreach (var message in messages)
     {
-        <li>@message</li>
+        @((MarkupString)message)
     }
 </ul>
 
@@ -42,7 +42,7 @@
 
         hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
         {
-            var encodedMsg = $"{user}: {message}";
+            var encodedMsg = Markdig.Markdown.ToHtml($"{user}: {message}");
             messages.Add(encodedMsg);
             InvokeAsync(StateHasChanged);
         });
