@@ -5,16 +5,19 @@
 
 <PageTitle>Index</PageTitle>
 
-<div class="flex bg-stone-400 w-screen h-screen" @onkeydown="@Enter">
+<div class="flex bg-stone-600 w-screen h-screen" @onkeydown="@Enter">
+    <ul id="messagesList">
+        @foreach (var message in messages)
+        {
+            <li class="w-screen">
+                <div class="mr-2 py-3 px-4 bg-stone-500 text-white">
+                    @message
+                </div>
+            </li>
+        }
+    </ul>
     <div id="input" class="absolute bottom-0 m-5 flex flex-row">
-        <ul id="messagesList">
-            @foreach (var message in messages)
-            {
-                <li>@message</li>
-            }
-        </ul>        
-        <input @bind-value="userInput" type="text" placeholder="User" class="text-sm rounded-lg block w-full p-2.5 bg-stone-700 placeholder-stone-100 text-white ring-stone-500" required/>
-        <input @bind-value="messageInput" type="text" placeholder="Message" class="text-sm rounded-lg block w-full p-2.5 bg-stone-700 placeholder-stone-100 text-white ring-stone-500" required>
+        <input @bind-value="messageInput" type="text" placeholder="Message" class="mr-2 text-sm block w-full p-2.5 bg-stone-700 placeholder-stone-100 text-white border-none focus:ring-0" required>
         <button @onclick="Send" disabled="@(!IsConnected)">Send</button>
     </div>
 </div>
@@ -53,7 +56,8 @@
 
     private async Task Send()
     {
-        if (hubConnection is not null || string.IsNullOrEmpty(messageInput))
+        if (string.IsNullOrEmpty(messageInput)) return;
+        if (hubConnection is not null)
         {
             StateHasChanged();
             await hubConnection.SendAsync("SendMessage", userInput, messageInput);
