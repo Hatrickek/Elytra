@@ -5,19 +5,19 @@
 
 <PageTitle>Index</PageTitle>
 
-<div class="flex bg-stone-600 w-screen h-screen" @onkeydown="@Enter">
+<div class="flex bg-stone-500 w-screen h-screen" @onkeydown="@Enter">
     <ul id="messagesList">
         @foreach (var message in messages)
         {
             <li class="w-screen">
-                <div class="mr-2 py-3 px-4 bg-stone-500 text-white">
+                <div class="mr-2 py-3 px-4 text-white">
                     @message
                 </div>
             </li>
         }
     </ul>
     <div id="input" class="absolute bottom-0 m-5 flex flex-row">
-        <input @bind-value="messageInput" type="text" placeholder="Message" class="mr-2 text-sm block w-full p-2.5 bg-stone-700 placeholder-stone-100 text-white border-none focus:ring-0" required>
+        <input @bind-value="messageInput" @bind-value:event="oninput" type="text" placeholder="Message" class="mr-2 text-sm block w-full p-2.5 bg-stone-700 placeholder-stone-100 text-white border-none focus:ring-0" required>
         <button @onclick="Send" disabled="@(!IsConnected)">Send</button>
     </div>
 </div>
