@@ -5,20 +5,19 @@
 
 <PageTitle>Index</PageTitle>
 
-<div class="flex bg-stone-500 w-screen h-screen" @onkeydown="@Enter">
-    <ul id="messagesList">
-        @foreach (var message in messages)
-        {
-            <li class="w-screen">
-                <div class="mr-2 py-3 px-4 text-white">
-                    @message
-                </div>
-            </li>
-        }
-    </ul>
-    <div id="input" class="absolute bottom-0 m-5 flex flex-row">
-        <input @bind-value="messageInput" @bind-value:event="oninput" type="text" placeholder="Message" class="mr-2 text-sm block w-full p-2.5 bg-stone-700 placeholder-stone-100 text-white border-none focus:ring-0" required>
-        <button @onclick="Send" disabled="@(!IsConnected)">Send</button>
+<div @onkeydown="@Enter" class="flex flex-col items-center justify-center w-screen min-h-screen text-neutral-200">
+    <div class="flex flex-col flex-grow w-screen bg-neutral-800 overflow-hidden">
+        <div class="flex flex-col flex-grow p-2">
+            <ul id="messageList">
+                @foreach(var message in messages){
+                    <p class="break-all p-2">@message</p>
+                }
+            </ul>
+        </div>
+
+        <div class="p-4">
+            <input @bind-value="messageInput" @bind-value:event="oninput" class="flex items-center h-10 w-full bg-neutral-700 rounded px-3 text-sm focus:outline-none text-neutral-200" type="text" placeholder="Message">
+        </div>
     </div>
 </div>
 
@@ -39,7 +38,7 @@
 
         hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
         {
-            var encodedMsg = $"{user}: {message}";
+            var encodedMsg = $"{message}";
             messages.Add(encodedMsg);
             InvokeAsync(StateHasChanged);
         });
