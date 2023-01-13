@@ -3,14 +3,29 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elytra", "src\Elytra\Elytra.csproj", "{8E8B5989-8533-4BF4-9E5C-3A8FBF0B693C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E5290CD-4A17-4851-9C48-D6DC32D7AAB6} = {5E5290CD-4A17-4851-9C48-D6DC32D7AAB6}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{953F1B3B-9C16-4FFE-A920-3E6CBCF82072}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elytra.Server", "src\Elytra.Server\Elytra.Server.csproj", "{9299EB9D-965C-4D66-8276-FA53AE355AC3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E5290CD-4A17-4851-9C48-D6DC32D7AAB6} = {5E5290CD-4A17-4851-9C48-D6DC32D7AAB6}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elytra.Domain", "src\Elytra.Domain\Elytra.Domain.csproj", "{852C875B-1AAA-46AC-9394-30D63172C2A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elytra.Database", "src\Elytra.Database\Elytra.Database.csproj", "{2749CD1C-8ADF-422F-9EFE-DA5B4BE88820}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elytra.Database", "src\Elytra.Database\Elytra.Database.csproj", "{2749CD1C-8ADF-422F-9EFE-DA5B4BE88820}"
+	ProjectSection(ProjectDependencies) = postProject
+		{852C875B-1AAA-46AC-9394-30D63172C2A6} = {852C875B-1AAA-46AC-9394-30D63172C2A6}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elytra.App", "src\Elytra.Application\Elytra.App.csproj", "{5E5290CD-4A17-4851-9C48-D6DC32D7AAB6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2749CD1C-8ADF-422F-9EFE-DA5B4BE88820} = {2749CD1C-8ADF-422F-9EFE-DA5B4BE88820}
+		{852C875B-1AAA-46AC-9394-30D63172C2A6} = {852C875B-1AAA-46AC-9394-30D63172C2A6}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +51,10 @@ Global
 		{2749CD1C-8ADF-422F-9EFE-DA5B4BE88820}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2749CD1C-8ADF-422F-9EFE-DA5B4BE88820}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2749CD1C-8ADF-422F-9EFE-DA5B4BE88820}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E5290CD-4A17-4851-9C48-D6DC32D7AAB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E5290CD-4A17-4851-9C48-D6DC32D7AAB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E5290CD-4A17-4851-9C48-D6DC32D7AAB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E5290CD-4A17-4851-9C48-D6DC32D7AAB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +64,7 @@ Global
 		{9299EB9D-965C-4D66-8276-FA53AE355AC3} = {953F1B3B-9C16-4FFE-A920-3E6CBCF82072}
 		{852C875B-1AAA-46AC-9394-30D63172C2A6} = {953F1B3B-9C16-4FFE-A920-3E6CBCF82072}
 		{2749CD1C-8ADF-422F-9EFE-DA5B4BE88820} = {953F1B3B-9C16-4FFE-A920-3E6CBCF82072}
+		{5E5290CD-4A17-4851-9C48-D6DC32D7AAB6} = {953F1B3B-9C16-4FFE-A920-3E6CBCF82072}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}

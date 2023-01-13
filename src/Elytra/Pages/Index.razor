@@ -35,7 +35,6 @@
 @code {
     private HubConnection? hubConnection;
     private List<Message> messages = new List<Message>();
-    private string? userInput;
     private string? messageInput;
 
     protected override async Task OnInitializedAsync()
@@ -44,6 +43,13 @@
             .WithUrl("http://192.168.178.136:5135/chat")
             .Build();
 
+        //Use hub get all messages
+        hubConnection.On<List<Message>>("ReceiveMessages", (Messages) =>
+        {
+            messages.AddRange(Messages);
+            InvokeAsync(StateHasChanged);
+        });
+
         hubConnection.On<Message>("ReceiveMessage", (Message) =>
         {
             var encodedMsg = $"{Message.MessageText}";
@@ -51,6 +57,7 @@
             InvokeAsync(StateHasChanged);
         });
         await hubConnection.StartAsync();
+        await hubConnection.SendAsync("GetMessages");
     }
 
     private async Task Enter(KeyboardEventArgs e)
