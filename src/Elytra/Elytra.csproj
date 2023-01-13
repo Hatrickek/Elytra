@@ -62,7 +62,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Elytra.Domain\Elytra.Domain.csproj" />
+      <ProjectReference Include="..\Elytra.Domain\Elytra.Domain.csproj" />
     </ItemGroup>
 
 </Project>
