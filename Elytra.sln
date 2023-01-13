@@ -3,10 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elytra", "src\Elytra\Elytra.csproj", "{8E8B5989-8533-4BF4-9E5C-3A8FBF0B693C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{576D0800-C90D-4BE9-BB4D-7D8D8C14486F} = {576D0800-C90D-4BE9-BB4D-7D8D8C14486F}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{953F1B3B-9C16-4FFE-A920-3E6CBCF82072}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elytra.Server", "src\Elytra.Server\Elytra.Server.csproj", "{9299EB9D-965C-4D66-8276-FA53AE355AC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elytra.Domain", "Elytra.Domain\Elytra.Domain.csproj", "{576D0800-C90D-4BE9-BB4D-7D8D8C14486F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +29,10 @@ Global
 		{9299EB9D-965C-4D66-8276-FA53AE355AC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9299EB9D-965C-4D66-8276-FA53AE355AC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9299EB9D-965C-4D66-8276-FA53AE355AC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{576D0800-C90D-4BE9-BB4D-7D8D8C14486F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{576D0800-C90D-4BE9-BB4D-7D8D8C14486F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{576D0800-C90D-4BE9-BB4D-7D8D8C14486F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{576D0800-C90D-4BE9-BB4D-7D8D8C14486F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -31,6 +40,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{8E8B5989-8533-4BF4-9E5C-3A8FBF0B693C} = {953F1B3B-9C16-4FFE-A920-3E6CBCF82072}
 		{9299EB9D-965C-4D66-8276-FA53AE355AC3} = {953F1B3B-9C16-4FFE-A920-3E6CBCF82072}
+		{576D0800-C90D-4BE9-BB4D-7D8D8C14486F} = {953F1B3B-9C16-4FFE-A920-3E6CBCF82072}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
