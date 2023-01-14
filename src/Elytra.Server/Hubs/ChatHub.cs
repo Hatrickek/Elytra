@@ -22,7 +22,7 @@ namespace Elytra.Server.Hubs
         public async Task GetMessages()
         {
             var messages = await _messageService.GetAllMessages();
-            await Clients.All.SendAsync("ReceiveMessages", messages);
+            await Clients.All.SendAsync("GetMessages", messages);
         }
     }
 }

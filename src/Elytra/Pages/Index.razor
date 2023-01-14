@@ -44,7 +44,7 @@
             .Build();
 
         //Use hub get all messages
-        hubConnection.On<List<Message>>("ReceiveMessages", (Messages) =>
+        hubConnection.On<List<Message>>("GetMessages", (Messages) =>
         {
             messages.AddRange(Messages);
             InvokeAsync(StateHasChanged);
