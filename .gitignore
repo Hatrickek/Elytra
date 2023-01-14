@@ -396,3 +396,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/src/Elytra.Server/ElytraDatabase.db
+/src/Elytra.Server/ElytraDatabase.db-shm
+/src/Elytra.Server/ElytraDatabase.db-wal
