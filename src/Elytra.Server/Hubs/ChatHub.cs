@@ -24,5 +24,11 @@ namespace Elytra.Server.Hubs
             var messages = await _messageService.GetAllMessages();
             await Clients.All.SendAsync("GetMessages", messages);
         }
+
+        public async Task DeleteMessage(Message message)
+        {
+            await _messageService.DeleteMessage(message);
+            await Clients.All.SendAsync("DeleteMessage", message);
+        }
     }
 }

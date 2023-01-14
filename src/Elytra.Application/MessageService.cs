@@ -23,7 +23,13 @@ namespace Elytra.App
         public async Task<List<Message>?> GetAllMessages()
         {
             Debug.Assert(_context.Messages != null, "Context messages are null!");
-            return await _context.Messages.Include(x => x.User).ToListAsync();
+            return await _context.Messages.Include(x => x.User).OrderBy(x => x.TimeStamp).ToListAsync();
+        }
+
+        public async Task DeleteMessage(Message message)
+        {
+            _context.Remove(message);
+            await _context.SaveChangesAsync();
         }
     }
 }

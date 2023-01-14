@@ -6,5 +6,6 @@ namespace Elytra.App
     {
         Task AddMessage(Message message);
         Task<List<Message>?> GetAllMessages();
+        Task DeleteMessage(Message message);
     }
 }

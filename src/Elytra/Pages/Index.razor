@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using Elytra.DebugUtils;
 @using Elytra.Domain.Models;
 @using Microsoft.AspNetCore.SignalR.Client
 @using System.Net
@@ -10,109 +11,104 @@
 
 <PageTitle>Index</PageTitle>
 
-<div @onkeydown="@Enter" class="flex flex-col items-center justify-center w-screen min-h-screen text-neutral-200">
-	<div class="flex flex-col flex-grow w-screen bg-neutral-800 overflow-hidden">
-		<div class="flex flex-col flex-grow p-2">
-			<ul id="messageList">
-				@foreach (var message in messages)
-				{
-					<div class="flex">
-						<div class="py-2 px-3">
-							<p class="text-sm text-violet-600">
-								@message.User.Username <span class="text-xs text-neutral-200">@message.TimeStamp</span>
-							</p>
-							<p class="text-sm mt-1">
-								@message.MessageText
-							</p>
-						</div>
-					</div>
-				}
-			</ul>
-		</div>
 
-		<div class="p-4">
-			<input @bind-value="messageInput" @bind-value:event="oninput" class="flex items-center h-10 w-full bg-neutral-700 rounded px-3 text-sm focus:outline-none text-neutral-200" type="text" placeholder="Message">
-		</div>
-	</div>
+<div @onkeydown="@Enter" class="flex flex-col items-center justify-center w-screen min-h-screen text-neutral-200">
+    <div class="flex flex-col flex-grow w-screen bg-neutral-800 overflow-hidden">
+        <div class="flex flex-col flex-grow p-2 overflow-y-auto h-96">
+            <ul id="messageList">
+                @foreach (var message in messages)
+                {
+                    <div class="flex">
+                        <div class="py-2 px-3">
+                            <p class="text-sm text-violet-600">
+                                @message.User.Username
+                                <span class="text-xs text-neutral-200">@message.TimeStamp</span>
+                                <span class="text-xs text-neutral-200 text-red-600 hover:cursor-pointer hover:text-red-400" @onclick="((async) => Delete(message))">Delete</span>
+                            </p>
+                            <p class="text-sm mt-1">
+                                @message.MessageText
+                            </p>
+                        </div>
+                    </div>
+                }
+            </ul>
+        </div>
+
+        <div class="m-3">
+            <input @bind-value="messageInput" @bind-value:event="oninput" class="flex items-center h-10 w-full bg-neutral-700 rounded px-3 text-sm focus:outline-none text-neutral-200" type="text" placeholder="Message">
+        </div>
+    </div>
 </div>
 
-@code{
-	class DebugUtils
-	{
-		public static string GetLocalIPAddress()
-		{
-			var host = Dns.GetHostEntry(Dns.GetHostName());
-			foreach (var ip in host.AddressList)
-			{
-				if (ip.AddressFamily == AddressFamily.InterNetwork)
-				{
-					return ip.ToString();
-				}
-			}
-			throw new Exception("No network adapters with an IPv4 address in the system!");
-		}
-	};
-}
 
 @code {
-	private HubConnection? hubConnection;
-	private readonly List<Message> messages = new();
-	private string? messageInput;
+    private HubConnection? hubConnection;
+    private readonly List<Message> messages = new();
+    private string? messageInput;
+    private User user = new() { Username = "Test" };
 
 
-	protected override async Task OnInitializedAsync()
-	{
-		string localipv4 = DebugUtils.GetLocalIPAddress();
+    protected override async Task OnInitializedAsync()
+    {
+        string localipv4 = IPUtil.GetLocalIPAddress();
 
-		hubConnection = new HubConnectionBuilder()
-			.WithUrl("http://" + localipv4 + ":5135/chat")
-			.Build();
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl("http://" + localipv4 + ":5135/chat")
+            .Build();
 
-	//Use hub get all messages
-		hubConnection.On<List<Message>>("GetMessages", (Messages) =>
-		{
-			messages.AddRange(Messages);
-			InvokeAsync(StateHasChanged);
-		});
+        //Use hub get all messages
+        hubConnection.On<List<Message>>("GetMessages", (Messages) =>
+        {
+            messages.AddRange(Messages);
+            InvokeAsync(StateHasChanged);
+        });
 
-		hubConnection.On<Message>("ReceiveMessage", (Message) =>
-		{
-			var encodedMsg = $"{Message.MessageText}";
-			messages.Add(Message);
-			InvokeAsync(StateHasChanged);
-		});
-		await hubConnection.StartAsync();
-		await hubConnection.SendAsync("GetMessages");
-	}
+        hubConnection.On<Message>("ReceiveMessage", (Message) =>
+        {
+            var encodedMsg = $"{Message.MessageText}";
+            messages.Add(Message);
+            InvokeAsync(StateHasChanged);
+        });
+        await hubConnection.StartAsync();
+        await hubConnection.SendAsync("GetMessages");
+    }
 
-	private async Task Enter(KeyboardEventArgs e)
-	{
-		if (e.Code is "Enter" or "NumpadEnter")
-		{
-			await Send();
-		}
-	}
+    private async Task Enter(KeyboardEventArgs e)
+    {
+        if (e.Code is "Enter" or "NumpadEnter")
+        {
+            await Send();
+        }
+    }
 
-	private async Task Send()
-	{
-		if (string.IsNullOrEmpty(messageInput)) return;
-		if (hubConnection is not null)
-		{
-			StateHasChanged();
-			await hubConnection.SendAsync("SendMessage", new Message {Id = 0, MessageText = messageInput, TimeStamp = DateTime.Now, User = new User {Username = "Test", Id = 0}});
-			messageInput = string.Empty;
-		}
-	}
+    private async Task Send()
+    {
+        if (string.IsNullOrEmpty(messageInput)) return;
+        if (hubConnection is not null)
+        {
+            await hubConnection.SendAsync("SendMessage", new Message { MessageText = messageInput, TimeStamp = DateTime.Now, User = user });
+            messageInput = string.Empty;
+        }
+    }
 
-	public bool IsConnected =>
-		hubConnection?.State == HubConnectionState.Connected;
+    //I think we need to change this up, need to learn SignalR for real!!!
+    private async Task Delete(Message message)
+    {
+        if (message is null) return;
+        await hubConnection.SendAsync("DeleteMessage", message);
+        messages.Remove(message);
+        StateHasChanged();
+    }
 
-	public async ValueTask DisposeAsync()
-	{
-		if (hubConnection is not null)
-		{
-			await hubConnection.DisposeAsync();
-		}
-	}
+    public bool IsConnected =>
+        hubConnection?.State == HubConnectionState.Connected;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
 
 }

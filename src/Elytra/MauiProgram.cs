@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.WebView.Maui;
+﻿using Elytra.DebugUtils;
+using Microsoft.AspNetCore.Components.WebView.Maui;
 
 namespace Elytra;
 
@@ -16,6 +17,7 @@ public static class MauiProgram
 		builder.Services.AddMauiBlazorWebView();
 #if DEBUG
 		builder.Services.AddBlazorWebViewDeveloperTools();
+		builder.Services.AddSingleton<IPUtil>();
 #endif
 
 		return builder.Build();
