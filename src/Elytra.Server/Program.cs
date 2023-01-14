@@ -1,9 +1,6 @@
 using Elytra.App;
 using Elytra.Database;
 using Elytra.Server.Hubs;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +8,6 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 //Response Compression Middleware
-
 
 //Enable SignalR
 builder.Services.AddSignalR(o =>
@@ -35,7 +31,6 @@ using (IServiceScope scope = builder.Services.BuildServiceProvider().CreateScope
     context.Database.EnsureCreated();
 }
 
-
 if (!app.Environment.IsDevelopment())
 {
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
@@ -44,8 +39,6 @@ if (!app.Environment.IsDevelopment())
     // Might cause issues on local development, only use in prod.
     app.UseHttpsRedirection();
 }
-
-app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 

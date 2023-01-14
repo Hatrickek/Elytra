@@ -1,11 +1,7 @@
-﻿using Elytra.Database;
+﻿using System.Diagnostics;
+using Elytra.Database;
 using Elytra.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Elytra.App
 {
@@ -20,12 +16,13 @@ namespace Elytra.App
         
         public async Task AddMessage(Message message)
         {
-            _context.Messages.Add(message);
+            _context.Messages?.Add(message);
             await _context.SaveChangesAsync();
         }
 
         public async Task<List<Message>?> GetAllMessages()
         {
+            Debug.Assert(_context.Messages != null, "Context messages are null!");
             return await _context.Messages.Include(x => x.User).ToListAsync();
         }
     }

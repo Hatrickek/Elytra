@@ -1,9 +1,4 @@
 ﻿using Elytra.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Elytra.App
 {
@@ -11,6 +6,5 @@ namespace Elytra.App
     {
         Task AddMessage(Message message);
         Task<List<Message>?> GetAllMessages();
-        
     }
 }

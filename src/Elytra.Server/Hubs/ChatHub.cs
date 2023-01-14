@@ -9,7 +9,7 @@ namespace Elytra.Server.Hubs
         private readonly IMessageService _messageService;
         public ChatHub(IMessageService messageService)
         {
-            this._messageService = messageService;
+            _messageService = messageService;
         }
         
         public async Task SendMessage(Message message)
