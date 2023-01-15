@@ -1,0 +1,17 @@
+﻿<aside class="w-56 h-full overflow-hidden bg-neutral-800 flex" aria-label="Sidebar">
+    <ul class="mt-2">
+        @foreach (string s in channels)
+        {
+            <li class="ml-2 mr-2 mb-1 p-1 hover:bg-neutral-700 rounded-md w-52">
+                <p class="text-neutral-200 hover:cursor-default">
+                    <span class="ml-1 mr-1 text-neutral-400 font-bold">#</span>@s.ToLower()
+                </p>
+            </li>
+        }
+    </ul>
+</aside>
+
+
+@code {
+    private string[] channels = { "General", "Memes" };
+}

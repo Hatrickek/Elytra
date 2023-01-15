@@ -15,7 +15,6 @@ namespace Elytra.Server.Hubs
         public async Task SendMessage(Message message)
         {
             await Clients.All.SendAsync("ReceiveMessage", message);
-            //add to database using MessageService
             await _messageService.AddMessage(message);
         }
 
