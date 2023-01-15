@@ -12,9 +12,9 @@
 <PageTitle>Index</PageTitle>
 
 
-<div @onkeydown="@Enter" class="flex flex-col">
-    <div class="flex flex-col flex-grow bg-neutral-700 overflow-hidden">
-        <div class="flex flex-col flex-grow p-2 overflow-y-auto h-96">
+<div @onkeydown="@Enter" class="flex flex-col ">
+    <div class="flex flex-col flex-grow bg-neutral-700 overflow-hidden w-full h-screen">
+        <div class="flex flex-col flex-grow p-2 overflow-y-auto h-96 text-neutral-100">
             <ul id="messageList">
                 @foreach (var message in messages)
                 {
@@ -35,7 +35,7 @@
         </div>
 
         <div class="m-3">
-            <input @bind-value="messageInput" @bind-value:event="oninput" class="flex items-center h-10 w-full bg-neutral-700 rounded px-3 text-sm focus:outline-none text-neutral-200" type="text" placeholder="Message">
+            <input @bind-value="messageInput" @bind-value:event="oninput" class="flex items-center h-10 w-full bg-neutral-800 rounded px-3 text-sm focus:outline-none text-neutral-200" type="text" placeholder="Message">
         </div>
     </div>
 </div>
