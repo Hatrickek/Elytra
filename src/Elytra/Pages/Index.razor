@@ -12,8 +12,8 @@
 <PageTitle>Index</PageTitle>
 
 
-<div @onkeydown="@Enter" class="flex flex-col items-center justify-center w-screen min-h-screen text-neutral-200">
-    <div class="flex flex-col flex-grow w-screen bg-neutral-800 overflow-hidden">
+<div @onkeydown="@Enter" class="flex flex-col">
+    <div class="flex flex-col flex-grow bg-neutral-700 overflow-hidden">
         <div class="flex flex-col flex-grow p-2 overflow-y-auto h-96">
             <ul id="messageList">
                 @foreach (var message in messages)
